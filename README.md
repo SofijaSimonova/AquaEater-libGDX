@@ -35,7 +35,7 @@ There are 4 different booster fish:
 - 🛡️ **Armor Fish** – protects the player from being eaten
 - 🔥 **Frenzy Fish** – allows eating any fish regardless of size
 - ⚡ **Speed Fish** – increases movement speed
-- ☠️ **Poison Fish** – decreases movement speed and score
+- ☠️ **Poison Fish** – makes the player unable to eat fish 
 
 > Only one booster can be active at a time.  
 > Booster effects last **10 seconds**.
