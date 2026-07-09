@@ -38,7 +38,7 @@ There are 4 different booster fish:
 - ☠️ **Poison Fish** – decreases movement speed and score
 
 > Only one booster can be active at a time.  
-> Booster effects last **8 seconds**.
+> Booster effects last **10 seconds**.
 
 ---
 
