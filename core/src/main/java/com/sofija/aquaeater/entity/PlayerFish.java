@@ -80,7 +80,7 @@ public class PlayerFish extends Fish{
 
     public void grow(){
         width+= GameConfig.PLAYER_GROWTH;
-        height = width+ GameConfig.PLAYER_ASPECT_RATIO;
+        height = width * GameConfig.PLAYER_ASPECT_RATIO;
     }
 
 
@@ -112,5 +112,13 @@ public class PlayerFish extends Fish{
 
     public void setCurrentTexture(Texture currentTexture) {
         this.currentTexture = currentTexture;
+    }
+
+    public BoosterType getActiveBooster() {
+        return activeBooster;
+    }
+
+    public float getBoosterTimer() {
+        return boosterTimer;
     }
 }

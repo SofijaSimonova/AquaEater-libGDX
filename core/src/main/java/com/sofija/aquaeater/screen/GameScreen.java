@@ -13,6 +13,8 @@ import com.sofija.aquaeater.assets.GameAssets;
 import com.sofija.aquaeater.config.GameConfig;
 import com.sofija.aquaeater.entity.Fish;
 import com.sofija.aquaeater.entity.PlayerFish;
+import com.sofija.aquaeater.manager.HighScoreManager;
+import com.sofija.aquaeater.ui.GameHud;
 import com.sofija.aquaeater.world.FishSpawner;
 import com.sofija.aquaeater.world.GameWorld;
 
@@ -27,18 +29,27 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private Viewport viewport;
     private GameWorld gameWorld;
+    private GameHud hud;
+    private HighScoreManager highScoreManager;
+    private final int selectedFish;
 
-    public GameScreen(AquaEaterGame game) {
+    public GameScreen(AquaEaterGame game, int selectedFish) {
         this.game = game;
         this.assets = game.getAssets();
+        this.selectedFish = selectedFish;
     }
 
     @Override
     public void show() {
         camera = new OrthographicCamera();
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+
         batch = new SpriteBatch();
-        gameWorld = new GameWorld(assets);
+        gameWorld = new GameWorld(assets, selectedFish);
+        highScoreManager = new HighScoreManager();
+        hud = new GameHud(gameWorld, highScoreManager, assets);
+
     }
 
     @Override
@@ -46,12 +57,34 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0f, 0.3f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gameWorld.update(delta);
+
+        if (gameWorld.isGameWon()) {
+            highScoreManager.saveHighScore(gameWorld.getScore());
+            assets.getVictorySound().play();
+            game.setScreen(
+                new WinScreen(
+                    game,
+                    gameWorld.getScore(),
+                    highScoreManager.getHighScore()
+                )
+            );
+            return;
+        }
+
+        if (gameWorld.isGameOver()){
+            assets.getGameOverSound().play();
+            highScoreManager.saveHighScore(gameWorld.getScore());
+            game.setScreen(new GameOverScreen(game, gameWorld.getScore(), highScoreManager.getHighScore()));
+            return;
+        }
+
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
         batch.draw(assets.getBackground(), 0, 0, GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
         gameWorld.render(batch);
+        hud.render(batch);
         batch.end();
     }
 

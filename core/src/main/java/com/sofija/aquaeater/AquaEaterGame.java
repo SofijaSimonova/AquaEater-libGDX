@@ -3,6 +3,7 @@ package com.sofija.aquaeater;
 import com.badlogic.gdx.Game;
 import com.sofija.aquaeater.assets.GameAssets;
 import com.sofija.aquaeater.screen.GameScreen;
+import com.sofija.aquaeater.screen.MainMenuScreen;
 
 public class AquaEaterGame extends Game {
 
@@ -14,7 +15,7 @@ public class AquaEaterGame extends Game {
         assets.load();
         assets.finishLoading();
 
-        setScreen(new GameScreen(this));
+        setScreen(new MainMenuScreen(this));
     }
 
     public GameAssets getAssets() {

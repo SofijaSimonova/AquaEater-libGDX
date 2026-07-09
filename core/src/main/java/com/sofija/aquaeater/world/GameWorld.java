@@ -17,13 +17,16 @@ public class GameWorld {
     private final List<Fish> fishes;
     private final FishSpawner fishSpawner;
     private final GameAssets assets;
+    private int score;
+    private boolean gameOver = false;
+    private boolean gameWon = false;
+    private final int selectedFish;
 
 
-    public GameWorld(GameAssets assets) {
-
-        this.player = new PlayerFish(assets.getPlayer());
+    public GameWorld(GameAssets assets, int selectedFish) {
         this.assets = assets;
-
+        this.selectedFish = selectedFish;
+        this.player = new PlayerFish(assets.getPlayerTexture(selectedFish));
         this.fishes = new ArrayList<>();
 
         this.fishSpawner = new FishSpawner(
@@ -38,6 +41,7 @@ public class GameWorld {
         updateFishes(delta);
         handleCollision();
         removeFishOutsideScreen();
+        checkWinCondition();
 
     }
 
@@ -69,24 +73,39 @@ public class GameWorld {
 
             return;
         }
-        if (player.canEat(collidingFish) || player.hasBooster(BoosterType.FRENZY)){
+        if (player.hasBooster(BoosterType.POISON)){
+            //namali high score, ne jadi ribi
+            if (!player.canEat(collidingFish)){
+                triggerGameOver();
+            }
+            return;
+        }
+        if (player.hasBooster(BoosterType.FRENZY)){
             eatFish(collidingFish);
             return;
         }
         if (player.hasBooster(BoosterType.ARMOR)){
-            fishes.remove(collidingFish);
+            if (player.canEat(collidingFish)){
+                eatFish(collidingFish);
+            }
             return;
         }
-        gameOver();
+        if (player.canEat(collidingFish)){
+            eatFish(collidingFish);
+            return;
+        }
+        triggerGameOver();
     }
 
-    private void gameOver() {
-        System.out.println("Game Over");
+    private void triggerGameOver() {
+        gameOver = true;
     }
 
     private void eatFish(Fish fish) {
         fishes.remove(fish);
         player.grow();
+        addScore();
+        assets.getEatSound().play();
     }
     public PlayerFish getPlayer() {
         return player;
@@ -94,6 +113,14 @@ public class GameWorld {
 
     public List<Fish> getFishes() {
         return fishes;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    private void addScore() {
+        score += GameConfig.FISH_SCORE;
     }
 
     public void render(SpriteBatch batch){
@@ -106,5 +133,19 @@ public class GameWorld {
         player.setBoosterTimer(GameConfig.BOOSTER_EFFECT_DURATION);
         player.setCurrentTexture(assets.getModeTexture(boosterFish.getBoosterType()));
 
+    }
+
+    private void checkWinCondition() {
+        if (player.getWidth() >= GameConfig.MAX_FISH_WIDTH) {
+            gameWon = true;
+        }
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public boolean isGameWon() {
+        return gameWon;
     }
 }

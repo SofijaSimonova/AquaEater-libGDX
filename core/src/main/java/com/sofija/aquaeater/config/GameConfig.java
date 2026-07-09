@@ -17,11 +17,15 @@ public final class GameConfig {
     public static final float FISH_SPAWN_INTERVAL = 1.2f;
     public static final int FISH_COUNT = 12;
     public static final float MIN_FISH_WIDTH = 60f;
-    public static final float MAX_FISH_WIDTH = 160f;
-    public static final float PLAYER_GROWTH = 4f;
+    public static final float MAX_FISH_WIDTH = 200f;
+    public static final float PLAYER_GROWTH = 1f;
     public static final float PLAYER_ASPECT_RATIO = 0.75f;
     public static final float BOOSTER_FISH_SPAWN_INTERVAL = 12f;
     public static final float PLAYER_SPEED_MULTIPLIER = 2f;
     public static final float BOOSTER_EFFECT_DURATION = 8f;
+    public static final int FISH_SCORE = 1;
+    public static final int FISH_2_UNLOCK_SCORE = 10;
+    public static final int FISH_3_UNLOCK_SCORE = 30;
+    public static final int FISH_4_UNLOCK_SCORE = 50;
 
 }
