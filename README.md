@@ -1,33 +1,105 @@
-# AquaEater
+# 🐟 Aqua Eater (libGDX)
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+Aqua Eater is a 2D arcade-style game developed in **Java** using the **libGDX** framework.
 
-This project was generated with a template including simple application launchers and a main class extending `Game` that sets the first screen.
+This project is a **remake of my original Aqua Eater game built with Pygame**. The goal was not to redesign the game, but to recreate it using **libGDX** in order to learn the framework, understand its architecture, and gain experience with Java game development.
 
-## Platforms
+---
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
+## Gameplay
 
-## Gradle
+The player controls a fish that must survive in the ocean by eating smaller fish while avoiding larger ones.
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+As the player grows, new fish skins become available, boosters appear, and the game ends once the player becomes the biggest fish in the ocean.
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+---
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+## Features
+
+- 🐟 Fish selection system with unlockable skins
+- 📈 High score system
+- 🦈 Dynamic enemy fish with different sizes
+- ⚡ Booster fish with temporary effects
+- 🎯 Win condition
+- 💀 Game Over screen
+- 🎉 Victory screen
+- 🔊 Sound effects
+- 💾 Persistent high score using Preferences
+
+---
+
+## Booster System
+
+There are 4 different booster fish:
+
+- 🛡️ **Armor Fish** – protects the player from being eaten
+- 🔥 **Frenzy Fish** – allows eating any fish regardless of size
+- ⚡ **Speed Fish** – increases movement speed
+- ☠️ **Poison Fish** – decreases movement speed and score
+
+> Only one booster can be active at a time.  
+> Booster effects last **8 seconds**.
+
+---
+
+## Controls
+
+- ⬅️ ➡️ Select fish
+- **ENTER** Start game
+- **W A S D** or **Arrow Keys** Move the player
+
+---
+
+## Tech Stack
+
+- **Java**
+- **libGDX**
+- **LWJGL3**
+
+---
+
+## Project Structure
+
+```text
+AquaEater/
+├── assets/
+│   ├── images/
+│   ├── sounds/
+│   └── fonts/
+├── core/
+├── lwjgl3/
+└── build.gradle
+```
+
+---
+
+## Sound Effects
+
+- `eat.wav` – played when eating a fish
+- `victory.wav` – played after winning
+- `game_over.wav` – played when the player loses
+
+---
+
+## High Score System
+
+The game stores the highest score locally using **libGDX Preferences**, allowing progress to persist between sessions.
+
+---
+
+## Learning Goals
+
+This project was created to:
+
+- Learn the libGDX framework
+- Practice game architecture in Java
+- Recreate an existing game using a different technology stack
+- Compare game development in **Pygame** and **libGDX**
+
+---
+
+## Run the Project
+
+```bash
+./gradlew lwjgl3:run
+```
